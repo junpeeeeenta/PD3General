@@ -1,0 +1,282 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix pd3: <http://DigitalTriplet.net/2021/08/ontology#> .
+@prefix pd3ex1: <http://DigitalTriplet.net/2021/08/ex1#> .
+
+pd3:Object a owl:Class ;
+  rdfs:subClassOf owl:Thing ;
+  rdfs:label "Object" ;
+  rdfs:comment "The top class in PD3. The superclass of Flow, Acion, and Container." ,
+               "It has an id, a layer, and a value." ;
+  rdfs:subClassOf [ a owl:Restriction ;
+                    owl:onProperty pd3:id ;
+                    owl:cardinality 1 ] ,
+                  [ a owl:Restriction ;
+                    owl:onProperty pd3:layer ;
+                    owl:cardinality 1 ] ,
+                  [ a owl:Restriction ;
+                    owl:onProperty pd3:value ;
+                    owl:cardinality 1 ] .
+
+pd3:id a owl:ObjectProperty ;
+  rdfs:label "id" ;
+  rdfs:comment "id denotes a flow, an acion, a container as a URL." ;
+  rdfs:domain pd3:Object ;
+  rdfs:range dcterms:URI .
+
+pd3:layer a owl:DatatypeProperty ;
+  rdfs:label "layer" ;
+  rdfs:comment "layer describes the layer which the subject belongs to." ;
+  rdfs:domain pd3:Object ;
+  rdfs:range rdfs:Literal .
+
+pd3:value a owl:DatatypeProperty ;
+  rdfs:label "value" ;
+  rdfs:comment "value provides a valuable information of the subject." ;
+  rdfs:domain pd3:Object ;
+  rdfs:range rdfs:Literal .
+
+#
+# Arc
+#
+
+pd3:Arc a owl:Class ;
+  rdfs:subClassOf pd3:Object ;
+  owl:disjointWith pd3:Action, pd3:Container ;
+  rdfs:label "Arc" ;
+  rdfs:comment "Flow for representing all kind of relationship like intension, tool, reason, and annotation as well as input and output." ;
+  rdfs:subClassOf [ a owl:Restriction ;
+                    owl:onProperty pd3:source ;
+   		    owl:maxCardinality 1 ] ,
+                  [ a owl:Restriction ;
+                    owl:onProperty pd3:target ;
+                    owl:maxCardinality 1 ] ,
+                  [ a owl:Restriction ;
+                    owl:onProperty pd3:arcType ;
+                    owl:maxCardinality 1 ] .
+
+pd3:source a owl:ObjectProperty ;
+  rdfs:label "source" ;
+  rdfs:comment "source indicates the start point of flow, that is an action (as output or child).";
+  rdfs:domain pd3:Arc ;
+  rdfs:range  pd3:Action .
+
+pd3:target a owl:ObjectProperty ;
+  rdfs:label "target" ;
+  rdfs:comment "target indicates the end point of flow, that is an action (as input) an container (as parent).";
+  rdfs:domain pd3:Arc ;
+  rdfs:range  pd3:Action .
+
+pd3:arcType a owl:DatatypeProperty ;
+  rdfs:label "arcType" ;
+  rdfs:domain pd3:Arc ;
+  rdfs:range rdfs:Literal .
+
+pd3:geoSourcePointX a owl:DatatypeProperty ;
+  rdfs:label "geoSourcePointX" ;
+  rdfs:domain pd3:Arc ;
+  rdfs:range xsd:float .
+
+pd3:geoSourcePointY a owl:DatatypeProperty ;
+  rdfs:label "geoSourcePointY" ;
+  rdfs:domain pd3:Arc ;
+  rdfs:range xsd:float .
+
+pd3:geoTargetPointX a owl:DatatypeProperty ;
+  rdfs:label "geoTargetPointX" ;
+  rdfs:domain pd3:Arc ;
+  rdfs:range xsd:float .
+
+pd3:geoTargetPointY a owl:DatatypeProperty ;
+  rdfs:label "geoTargetPointY" ;
+  rdfs:domain pd3:Arc ;
+  rdfs:range xsd:float .
+
+pd3:exitX a owl:DatatypeProperty ;
+  rdfs:label "exitX" ;
+  rdfs:domain pd3:Arc ;
+  rdfs:range xsd:float .
+
+pd3:exitY a owl:DatatypeProperty ;
+  rdfs:label "exitY" ;
+  rdfs:domain pd3:Arc ;
+  rdfs:range xsd:float .
+
+pd3:entryX a owl:DatatypeProperty ;
+  rdfs:label "entryX" ;
+  rdfs:domain pd3:Arc ;
+  rdfs:range xsd:float .
+
+pd3:entryY a owl:DatatypeProperty ;
+  rdfs:label "entryY" ;
+  rdfs:domain pd3:Arc ;
+  rdfs:range xsd:float .
+
+
+#
+# Flow
+#
+
+pd3:Flow a owl:Class ;
+  rdfs:subClassOf pd3:Arc ;
+  rdfs:label "Flow" ;
+  rdfs:comment "every flow may have a source, a target, and a sourceType." .
+
+
+pd3:SupFlow a owl:Class ;
+  rdfs:subClassOf pd3:Arc ;
+  rdfs:label "SupFlow" ;
+  rdfs:comment "Suplemental Flow including reason and tools." .
+
+pd3:ContainerFlow a owl:Class ;
+  rdfs:subClassOf pd3:Arc ;
+  rdfs:label "ContainerFlow" ;
+  rdfs:comment "Flow connecting a container to an action." ;
+  rdfs:subClassOf [ a owl:Restriction ;
+                    owl:onProperty pd3:source ;
+                    owl:maxCardinality 1 ] ,
+                  [ a owl:Restriction ;
+                    owl:onProperty pd3:target ;
+                    owl:maxCardinality 1 ] ,
+                  [ a owl:Restriction ;
+                    owl:onProperty pd3:arcType ;
+                    owl:maxCardinality 1 ] .
+
+
+#
+# Node
+#
+pd3:Node a owl:Class ;
+  rdfs:subClassOf pd3:Object ;
+  rdfs:label "Node" ;
+  rdfs:comment "General class including Action and Container." ;
+  rdfs:subClassOf [ a owl:Restriction ;
+                    owl:onProperty pd3:geoBoundingX ;
+                    owl:maxCardinality 1 ] ,
+                  [ a owl:Restriction ;
+                    owl:onProperty pd3:geoBoundingY ;
+                    owl:maxCardinality 1 ] ,
+                  [ a owl:Restriction ;
+                    owl:onProperty pd3:geoBoundingWidth ;
+                    owl:maxCardinality 1 ] ,
+                  [ a owl:Restriction ;
+                    owl:onProperty pd3:geoBoundingHeight ;
+                    owl:maxCardinality 1 ] .
+
+pd3:geoBoundingX a owl:DatatypeProperty ;
+  rdfs:label "geoBoundingX" ;
+  rdfs:domain pd3:Node ;
+  rdfs:range xsd:float .
+
+pd3:geoBoundingX a owl:DatatypeProperty ;
+  rdfs:label "geoBoundingX" ;
+  rdfs:domain pd3:Node ;
+  rdfs:range xsd:float .
+
+pd3:geoBoundingY a owl:DatatypeProperty ;
+  rdfs:label "geoBoundingY" ;
+  rdfs:domain pd3:Node ;
+  rdfs:range xsd:float .
+
+pd3:geoBoundingWidth a owl:DatatypeProperty ;
+  rdfs:label "geoBoundingWidth" ;
+  rdfs:domain pd3:Node ;
+  rdfs:range xsd:float .
+
+pd3:geoBoundingHeight a owl:DatatypeProperty ;
+  rdfs:label "geoBoundingHeight" ;
+  rdfs:domain pd3:Node ;
+  rdfs:range xsd:float .
+
+#
+# Action
+#
+
+pd3:Action a owl:Class ;
+  rdfs:subClassOf pd3:Node ;
+  owl:disjointWith pd3:Arc, pd3:Container ;
+  rdfs:label "Action" ;
+  rdfs:comment "every action may have an actionType, inputs, outputs, controls, mechanisms, a parent, and children." ;
+  rdfs:subClassOf [ a owl:Restriction ;
+                    owl:onProperty pd3:actionType ;
+                    owl:maxCardinality 1 ] ,
+                  [ a owl:Restriction ;
+                    owl:onProperty pd3:expansion ;
+                    owl:maxCardinality 1 ] ,
+                  [ a owl:Restriction ;
+                    owl:onProperty pd3:attribution ;
+                    owl:maxCardinality 1 ] .
+
+pd3:actionType a owl:DatatypeProperty ;
+  rdfs:label "actionType" ;
+  rdfs:domain pd3:Action ;
+  rdfs:range rdfs:Literal .
+
+pd3:input a owl:ObjectProperty ;
+  rdfs:label "input" ;
+  rdfs:domain pd3:Node ;
+  rdfs:range pd3:Arc .
+
+pd3:output a owl:ObjectProperty ;
+  rdfs:label "output" ;
+  rdfs:domain pd3:Node ;
+  rdfs:range pd3:Arc .
+
+pd3:control a owl:ObjectProperty ;
+  rdfs:label "control" ;
+  rdfs:domain pd3:Action ;
+  rdfs:range pd3:Arc .
+
+pd3:mechanism a owl:ObjectProperty ;
+  rdfs:label "mechanism" ;
+  rdfs:domain pd3:Action ;
+  rdfs:range pd3:Arc .
+
+pd3:expansion a owl:ObjectProperty ;
+  rdfs:label "expansion" ;
+  rdfs:domain pd3:Action ;
+  rdfs:range pd3:Container .
+
+pd3:attribution a owl:ObjectProperty ;
+  rdfs:label "attribution" ;
+  rdfs:domain pd3:Action ;
+  rdfs:range pd3:Container .
+
+#
+# Container
+#
+
+pd3:Container a owl:Class ;
+  rdfs:subClassOf pd3:Node ;
+  owl:disjointWith pd3:Arc, pd3:Action ;
+  rdfs:label "Container" ;
+  rdfs:comment "every container may have an containerType, a parent, children." ;
+  rdfs:subClassOf [ a owl:Restriction ;
+                    owl:onProperty pd3:containerType ;
+                    owl:maxCardinality 1 ] ,
+                  [ a owl:Restriction ;
+                    owl:onProperty pd3:contraction ;
+                    owl:cardinality 1 ] .
+
+pd3:containerType a owl:DatatypeProperty ;
+  rdfs:label "containerType" ;
+  rdfs:domain pd3:Container ;
+  rdfs:range rdfs:Literal .
+
+pd3:contraction a owl:ObjectProperty ;
+  rdfs:label "contraction" ;
+  rdfs:domain pd3:Container ;
+  rdfs:range pd3:Action .
+
+pd3:contraction owl:inverseOf pd3:expansion .
+
+pd3:member a owl:ObjectProperty ;
+  rdfs:label "member" ;
+  rdfs:domain pd3:Container ;
+  rdfs:range pd3:Action .
+
+pd3:member owl:inverseOf pd3:attribution .
