@@ -1,0 +1,364 @@
+{
+  "@graph" : [ {
+    "@id" : "_:b0",
+    "@type" : "owl:Restriction",
+    "owl:maxCardinality" : 1,
+    "onProperty" : "pd3:source"
+  }, {
+    "@id" : "_:b1",
+    "@type" : "owl:Restriction",
+    "owl:maxCardinality" : 1,
+    "onProperty" : "pd3:geoBoundingY"
+  }, {
+    "@id" : "_:b10",
+    "@type" : "owl:Restriction",
+    "owl:maxCardinality" : 1,
+    "onProperty" : "pd3:arcType"
+  }, {
+    "@id" : "_:b11",
+    "@type" : "owl:Restriction",
+    "owl:maxCardinality" : 1,
+    "onProperty" : "pd3:target"
+  }, {
+    "@id" : "_:b12",
+    "@type" : "owl:Restriction",
+    "owl:maxCardinality" : 1,
+    "onProperty" : "pd3:source"
+  }, {
+    "@id" : "_:b13",
+    "@type" : "owl:Restriction",
+    "owl:maxCardinality" : 1,
+    "onProperty" : "pd3:geoBoundingWidth"
+  }, {
+    "@id" : "_:b14",
+    "@type" : "owl:Restriction",
+    "owl:maxCardinality" : 1,
+    "onProperty" : "pd3:geoBoundingX"
+  }, {
+    "@id" : "_:b15",
+    "@type" : "owl:Restriction",
+    "owl:cardinality" : 1,
+    "onProperty" : "pd3:layer"
+  }, {
+    "@id" : "_:b16",
+    "@type" : "owl:Restriction",
+    "owl:cardinality" : 1,
+    "onProperty" : "pd3:id"
+  }, {
+    "@id" : "_:b17",
+    "@type" : "owl:Restriction",
+    "owl:maxCardinality" : 1,
+    "onProperty" : "pd3:target"
+  }, {
+    "@id" : "_:b2",
+    "@type" : "owl:Restriction",
+    "owl:maxCardinality" : 1,
+    "onProperty" : "pd3:attribution"
+  }, {
+    "@id" : "_:b3",
+    "@type" : "owl:Restriction",
+    "owl:maxCardinality" : 1,
+    "onProperty" : "pd3:expansion"
+  }, {
+    "@id" : "_:b4",
+    "@type" : "owl:Restriction",
+    "owl:maxCardinality" : 1,
+    "onProperty" : "pd3:actionType"
+  }, {
+    "@id" : "_:b5",
+    "@type" : "owl:Restriction",
+    "owl:maxCardinality" : 1,
+    "onProperty" : "pd3:arcType"
+  }, {
+    "@id" : "_:b6",
+    "@type" : "owl:Restriction",
+    "owl:maxCardinality" : 1,
+    "onProperty" : "pd3:containerType"
+  }, {
+    "@id" : "_:b7",
+    "@type" : "owl:Restriction",
+    "owl:maxCardinality" : 1,
+    "onProperty" : "pd3:geoBoundingHeight"
+  }, {
+    "@id" : "_:b8",
+    "@type" : "owl:Restriction",
+    "owl:cardinality" : 1,
+    "onProperty" : "pd3:contraction"
+  }, {
+    "@id" : "_:b9",
+    "@type" : "owl:Restriction",
+    "owl:cardinality" : 1,
+    "onProperty" : "pd3:value"
+  }, {
+    "@id" : "pd3:Action",
+    "@type" : "owl:Class",
+    "comment" : "every action may have an actionType, inputs, outputs, controls, mechanisms, a parent, and children.",
+    "label" : "Action",
+    "subClassOf" : [ "_:b2", "_:b3", "_:b4", "pd3:Node" ],
+    "disjointWith" : [ "pd3:Container", "pd3:Arc" ]
+  }, {
+    "@id" : "pd3:Arc",
+    "@type" : "owl:Class",
+    "comment" : "Flow for representing all kind of relationship like intension, tool, reason, and annotation as well as input and output.",
+    "label" : "Arc",
+    "subClassOf" : [ "_:b10", "_:b17", "_:b12", "pd3:Object" ],
+    "disjointWith" : [ "pd3:Container", "pd3:Action" ]
+  }, {
+    "@id" : "pd3:Container",
+    "@type" : "owl:Class",
+    "comment" : "every container may have an containerType, a parent, children.",
+    "label" : "Container",
+    "subClassOf" : [ "_:b8", "_:b6", "pd3:Node" ],
+    "disjointWith" : [ "pd3:Action", "pd3:Arc" ]
+  }, {
+    "@id" : "pd3:ContainerFlow",
+    "@type" : "owl:Class",
+    "comment" : "Flow connecting a container to an action.",
+    "label" : "ContainerFlow",
+    "subClassOf" : [ "_:b5", "_:b11", "_:b0", "pd3:Arc" ]
+  }, {
+    "@id" : "pd3:Flow",
+    "@type" : "owl:Class",
+    "comment" : "every flow may have a source, a target, and a sourceType.",
+    "label" : "Flow",
+    "subClassOf" : "pd3:Arc"
+  }, {
+    "@id" : "pd3:Node",
+    "@type" : "owl:Class",
+    "comment" : "General class including Action and Container.",
+    "label" : "Node",
+    "subClassOf" : [ "_:b7", "_:b13", "_:b1", "_:b14", "pd3:Object" ]
+  }, {
+    "@id" : "pd3:Object",
+    "@type" : "owl:Class",
+    "comment" : [ "It has an id, a layer, and a value.", "The top class in PD3. The superclass of Flow, Acion, and Container." ],
+    "label" : "Object",
+    "subClassOf" : [ "_:b9", "_:b15", "_:b16", "owl:Thing" ]
+  }, {
+    "@id" : "pd3:SupFlow",
+    "@type" : "owl:Class",
+    "comment" : "Suplemental Flow including reason and tools.",
+    "label" : "SupFlow",
+    "subClassOf" : "pd3:Arc"
+  }, {
+    "@id" : "pd3:actionType",
+    "@type" : "owl:DatatypeProperty",
+    "domain" : "pd3:Action",
+    "label" : "actionType",
+    "range" : "rdfs:Literal"
+  }, {
+    "@id" : "pd3:arcType",
+    "@type" : "owl:DatatypeProperty",
+    "domain" : "pd3:Arc",
+    "label" : "arcType",
+    "range" : "rdfs:Literal"
+  }, {
+    "@id" : "pd3:attribution",
+    "@type" : "owl:ObjectProperty",
+    "domain" : "pd3:Action",
+    "label" : "attribution",
+    "range" : "pd3:Container"
+  }, {
+    "@id" : "pd3:containerType",
+    "@type" : "owl:DatatypeProperty",
+    "domain" : "pd3:Container",
+    "label" : "containerType",
+    "range" : "rdfs:Literal"
+  }, {
+    "@id" : "pd3:contraction",
+    "@type" : "owl:ObjectProperty",
+    "domain" : "pd3:Container",
+    "label" : "contraction",
+    "range" : "pd3:Action",
+    "inverseOf" : "pd3:expansion"
+  }, {
+    "@id" : "pd3:control",
+    "@type" : "owl:ObjectProperty",
+    "domain" : "pd3:Action",
+    "label" : "control",
+    "range" : "pd3:Arc"
+  }, {
+    "@id" : "pd3:entryX",
+    "@type" : "owl:DatatypeProperty",
+    "domain" : "pd3:Arc",
+    "label" : "entryX",
+    "range" : "xsd:float"
+  }, {
+    "@id" : "pd3:entryY",
+    "@type" : "owl:DatatypeProperty",
+    "domain" : "pd3:Arc",
+    "label" : "entryY",
+    "range" : "xsd:float"
+  }, {
+    "@id" : "pd3:exitX",
+    "@type" : "owl:DatatypeProperty",
+    "domain" : "pd3:Arc",
+    "label" : "exitX",
+    "range" : "xsd:float"
+  }, {
+    "@id" : "pd3:exitY",
+    "@type" : "owl:DatatypeProperty",
+    "domain" : "pd3:Arc",
+    "label" : "exitY",
+    "range" : "xsd:float"
+  }, {
+    "@id" : "pd3:expansion",
+    "@type" : "owl:ObjectProperty",
+    "domain" : "pd3:Action",
+    "label" : "expansion",
+    "range" : "pd3:Container"
+  }, {
+    "@id" : "pd3:geoBoundingHeight",
+    "@type" : "owl:DatatypeProperty",
+    "domain" : "pd3:Node",
+    "label" : "geoBoundingHeight",
+    "range" : "xsd:float"
+  }, {
+    "@id" : "pd3:geoBoundingWidth",
+    "@type" : "owl:DatatypeProperty",
+    "domain" : "pd3:Node",
+    "label" : "geoBoundingWidth",
+    "range" : "xsd:float"
+  }, {
+    "@id" : "pd3:geoBoundingX",
+    "@type" : "owl:DatatypeProperty",
+    "domain" : "pd3:Node",
+    "label" : "geoBoundingX",
+    "range" : "xsd:float"
+  }, {
+    "@id" : "pd3:geoBoundingY",
+    "@type" : "owl:DatatypeProperty",
+    "domain" : "pd3:Node",
+    "label" : "geoBoundingY",
+    "range" : "xsd:float"
+  }, {
+    "@id" : "pd3:geoSourcePointX",
+    "@type" : "owl:DatatypeProperty",
+    "domain" : "pd3:Arc",
+    "label" : "geoSourcePointX",
+    "range" : "xsd:float"
+  }, {
+    "@id" : "pd3:geoSourcePointY",
+    "@type" : "owl:DatatypeProperty",
+    "domain" : "pd3:Arc",
+    "label" : "geoSourcePointY",
+    "range" : "xsd:float"
+  }, {
+    "@id" : "pd3:geoTargetPointX",
+    "@type" : "owl:DatatypeProperty",
+    "domain" : "pd3:Arc",
+    "label" : "geoTargetPointX",
+    "range" : "xsd:float"
+  }, {
+    "@id" : "pd3:geoTargetPointY",
+    "@type" : "owl:DatatypeProperty",
+    "domain" : "pd3:Arc",
+    "label" : "geoTargetPointY",
+    "range" : "xsd:float"
+  }, {
+    "@id" : "pd3:id",
+    "@type" : "owl:ObjectProperty",
+    "comment" : "id denotes a flow, an acion, a container as a URL.",
+    "domain" : "pd3:Object",
+    "label" : "id",
+    "range" : "dcterms:URI"
+  }, {
+    "@id" : "pd3:input",
+    "@type" : "owl:ObjectProperty",
+    "domain" : "pd3:Node",
+    "label" : "input",
+    "range" : "pd3:Arc"
+  }, {
+    "@id" : "pd3:layer",
+    "@type" : "owl:DatatypeProperty",
+    "comment" : "layer describes the layer which the subject belongs to.",
+    "domain" : "pd3:Object",
+    "label" : "layer",
+    "range" : "rdfs:Literal"
+  }, {
+    "@id" : "pd3:mechanism",
+    "@type" : "owl:ObjectProperty",
+    "domain" : "pd3:Action",
+    "label" : "mechanism",
+    "range" : "pd3:Arc"
+  }, {
+    "@id" : "pd3:member",
+    "@type" : "owl:ObjectProperty",
+    "domain" : "pd3:Container",
+    "label" : "member",
+    "range" : "pd3:Action",
+    "inverseOf" : "pd3:attribution"
+  }, {
+    "@id" : "pd3:output",
+    "@type" : "owl:ObjectProperty",
+    "domain" : "pd3:Node",
+    "label" : "output",
+    "range" : "pd3:Arc"
+  }, {
+    "@id" : "pd3:source",
+    "@type" : "owl:ObjectProperty",
+    "comment" : "source indicates the start point of flow, that is an action (as output or child).",
+    "domain" : "pd3:Arc",
+    "label" : "source",
+    "range" : "pd3:Action"
+  }, {
+    "@id" : "pd3:target",
+    "@type" : "owl:ObjectProperty",
+    "comment" : "target indicates the end point of flow, that is an action (as input) an container (as parent).",
+    "domain" : "pd3:Arc",
+    "label" : "target",
+    "range" : "pd3:Action"
+  }, {
+    "@id" : "pd3:value",
+    "@type" : "owl:DatatypeProperty",
+    "comment" : "value provides a valuable information of the subject.",
+    "domain" : "pd3:Object",
+    "label" : "value",
+    "range" : "rdfs:Literal"
+  } ],
+  "@id" : "urn:x-arq:DefaultGraphNode",
+  "@context" : {
+    "range" : {
+      "@id" : "http://www.w3.org/2000/01/rdf-schema#range",
+      "@type" : "@id"
+    },
+    "domain" : {
+      "@id" : "http://www.w3.org/2000/01/rdf-schema#domain",
+      "@type" : "@id"
+    },
+    "label" : "http://www.w3.org/2000/01/rdf-schema#label",
+    "maxCardinality" : {
+      "@id" : "http://www.w3.org/2002/07/owl#maxCardinality",
+      "@type" : "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "onProperty" : {
+      "@id" : "http://www.w3.org/2002/07/owl#onProperty",
+      "@type" : "@id"
+    },
+    "subClassOf" : {
+      "@id" : "http://www.w3.org/2000/01/rdf-schema#subClassOf",
+      "@type" : "@id"
+    },
+    "comment" : "http://www.w3.org/2000/01/rdf-schema#comment",
+    "disjointWith" : {
+      "@id" : "http://www.w3.org/2002/07/owl#disjointWith",
+      "@type" : "@id"
+    },
+    "inverseOf" : {
+      "@id" : "http://www.w3.org/2002/07/owl#inverseOf",
+      "@type" : "@id"
+    },
+    "cardinality" : {
+      "@id" : "http://www.w3.org/2002/07/owl#cardinality",
+      "@type" : "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "owl" : "http://www.w3.org/2002/07/owl#",
+    "rdf" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "pd3ex1" : "http://DigitalTriplet.net/2021/08/ex1#",
+    "xsd" : "http://www.w3.org/2001/XMLSchema#",
+    "skos" : "http://www.w3.org/2004/02/skos/core#",
+    "dcterms" : "http://purl.org/dc/terms/",
+    "rdfs" : "http://www.w3.org/2000/01/rdf-schema#",
+    "pd3" : "http://DigitalTriplet.net/2021/08/ontology#"
+  }
+}
